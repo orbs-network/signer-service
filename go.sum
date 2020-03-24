@@ -118,6 +118,8 @@ github.com/orbs-network/go-mock v0.0.0-20180813130752-890a1ee8d0a1/go.mod h1:Hfj
 github.com/orbs-network/go-mock v1.1.0/go.mod h1:vNTkjf76K7Czx7lSNojqdi9DKP5uG81/LKq4PwNGXC8=
 github.com/orbs-network/gojay v1.3.0/go.mod h1:xdSp1mz0+DL+c6OLsbZ5qB/Gtygikcr5NdSsU1GsRC0=
 github.com/orbs-network/govnr v0.2.0/go.mod h1:kZctUOFclDbO3Z6w559++l4qh0FPb57XdE5IdOFCbI4=
+github.com/orbs-network/healthcheck v0.0.0-20200319121938-0c2880ec01cb h1:OXCPhy8fUBoKbkmm0V4cmB0dDFt2dJ5zMdNel7aBvJU=
+github.com/orbs-network/healthcheck v0.0.0-20200319121938-0c2880ec01cb/go.mod h1:tKp6O9i5wAxXJmvcztnZdW4tyMAR1wUlsyn1BAxu6lc=
 github.com/orbs-network/membuffers v0.4.0 h1:tqeCLjdXJX3JIGy2mEMroeE+vG5mWTZx1vpwz7sgQKc=
 github.com/orbs-network/membuffers v0.4.0/go.mod h1:mhOIfhkMQWKhbQbwD2BoIlV9eAA3LwZXMC0+JIrDmCM=
 github.com/orbs-network/orbs-spec v0.0.0-20200312223140-a78d945bab99 h1:SIM5FvYeayQfRWBTwuPfe/JHI1NrKY7QaTzjfemjAkA=

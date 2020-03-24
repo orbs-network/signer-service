@@ -11,6 +11,7 @@ require (
 	github.com/google/go-cmp v0.3.1
 	github.com/orbs-network/go-mock v1.1.0
 	github.com/orbs-network/govnr v0.2.0
+	github.com/orbs-network/healthcheck v0.0.0-20200319121938-0c2880ec01cb // indirect
 	github.com/orbs-network/membuffers v0.4.0
 	github.com/orbs-network/orbs-spec v0.0.0-20200312223140-a78d945bab99
 	github.com/orbs-network/scribe v0.2.3
