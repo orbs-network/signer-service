@@ -11,7 +11,6 @@ import (
 	"github.com/orbs-network/govnr"
 	"github.com/orbs-network/signer-service/config"
 	"github.com/orbs-network/signer-service/service"
-	"github.com/orbs-network/signer-service/synchronization/supervised"
 	"github.com/orbs-network/orbs-spec/types/go/services"
 	"github.com/orbs-network/scribe/log"
 )
@@ -54,5 +53,5 @@ func StartSignerServer(cfg config.SignerServiceConfig, logger log.Logger) (*Serv
 }
 
 func (s *Server) GracefulShutdown(shutdownContext context.Context) {
-	supervised.ShutdownAllGracefully(shutdownContext, s.httpServer)
+	s.httpServer.GracefulShutdown(shutdownContext)
 }

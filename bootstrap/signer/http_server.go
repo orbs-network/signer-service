@@ -8,15 +8,14 @@ package signer
 
 import (
 	"context"
-	"github.com/orbs-network/signer-service/bootstrap/httpserver"
+	"github.com/orbs-network/govnr"
 	"github.com/orbs-network/scribe/log"
-	"github.com/orbs-network/signer-service/synchronization/supervised"
 	"net"
 	"net/http"
 )
 
 type httpServer struct {
-	supervised.ChanShutdownWaiter
+	govnr.ShutdownWaiter
 	server *http.Server
 	port   int
 	logger log.Logger
@@ -35,7 +34,6 @@ func NewHttpServer(address string, logger log.Logger) (*httpServer, error) {
 	router := http.NewServeMux()
 
 	s := &httpServer{
-		ChanShutdownWaiter: supervised.NewChanWaiter("SignerHttpServer"),
 		server: &http.Server{
 			Handler: router,
 		},
@@ -44,8 +42,7 @@ func NewHttpServer(address string, logger log.Logger) (*httpServer, error) {
 		router: router,
 	}
 
-	// We prefer not to use `HttpServer.ListenAndServe` because we want to block until the socket is listening or exit immediately
-	go s.server.Serve(httpserver.TcpKeepAliveListener{listener.(*net.TCPListener)})
+	go s.server.Serve(listener)
 
 	return s, nil
 }
@@ -54,7 +51,6 @@ func (s *httpServer) GracefulShutdown(shutdownContext context.Context) {
 	if err := s.server.Shutdown(shutdownContext); err != nil {
 		s.logger.Error("failed to stop http HttpServer gracefully", log.Error(err))
 	}
-	s.Shutdown()
 
 }
 
