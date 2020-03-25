@@ -3,9 +3,8 @@ package config
 import (
 	"bytes"
 	"encoding/hex"
-	"github.com/orbs-network/orbs-spec/types/go/primitives"
-	"github.com/orbs-network/signer-service/crypto/digest"
-	"github.com/orbs-network/signer-service/crypto/signature"
+	"github.com/orbs-network/crypto-lib-go/crypto/digest"
+	"github.com/orbs-network/crypto-lib-go/crypto/signature"
 	"github.com/pkg/errors"
 )
 
@@ -13,18 +12,10 @@ func ValidateSigner(cfg SignerServiceConfig) error {
 	if len(cfg.NodePrivateKey()) == 0 {
 		return errors.New("node private key must not be empty")
 	}
-	return requireCorrectNodeAddressAndPrivateKey(cfg.NodeAddress(), cfg.NodePrivateKey())
-}
+	address := cfg.NodeAddress()
+	key := cfg.NodePrivateKey()
 
-func requireCorrectNodeAddressAndPrivateKey(address primitives.NodeAddress, key primitives.EcdsaSecp256K1PrivateKey) error {
-	// FIXME make byte32
-	msg := []byte{
-		0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0, 0, 0, 0,
-	}
-
+	msg := make([]byte, 32)
 	sign, err := signature.SignEcdsaSecp256K1(key, msg)
 	if err != nil {
 		return errors.Wrap(err, "could not create test sign")

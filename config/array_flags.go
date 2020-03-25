@@ -8,7 +8,7 @@ package config
 
 import (
 	"encoding/json"
-	"github.com/orbs-network/signer-service/crypto/encoding"
+	"github.com/orbs-network/crypto-lib-go/crypto/encoding"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"os"

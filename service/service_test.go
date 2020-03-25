@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
-	"github.com/orbs-network/signer-service/crypto/digest"
-	"github.com/orbs-network/signer-service/test/crypto/keys"
+	"github.com/orbs-network/crypto-lib-go/crypto/digest"
+	"github.com/orbs-network/crypto-lib-go/test/crypto/keys"
 	"github.com/orbs-network/orbs-spec/types/go/primitives"
 	"github.com/orbs-network/orbs-spec/types/go/services"
 	"github.com/orbs-network/scribe/log"

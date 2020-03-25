@@ -9,6 +9,7 @@ require (
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd
 	github.com/ethereum/go-ethereum v1.9.12
 	github.com/google/go-cmp v0.3.1
+	github.com/orbs-network/crypto-lib-go v0.0.0-20200325153231-b13f425437d3
 	github.com/orbs-network/go-mock v1.1.0
 	github.com/orbs-network/govnr v0.2.0
 	github.com/orbs-network/healthcheck v0.0.0-20200319121938-0c2880ec01cb
