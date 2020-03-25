@@ -52,14 +52,14 @@ func GetNodeConfigFromFiles(configFiles ArrayFlags, httpAddress string) (SignerS
 		}
 	}
 
-	nodeAddress, err := encoding.DecodeHex(cfg["node-httpAddress"])
+	nodeAddress, err := encoding.DecodeHex(cfg["node-address"])
 	if err != nil {
-		return nil, errors.New("could not decode node httpAddress")
+		return nil, errors.New("could not decode node address")
 	}
 
-	nodePrivateKey, err := encoding.DecodeHex(cfg["node-httpAddress"])
+	nodePrivateKey, err := encoding.DecodeHex(cfg["node-private-key"])
 	if err != nil {
-		return nil, errors.New("could not decode node httpAddress")
+		return nil, errors.New("could not decode node private key")
 	}
 
 	result := NewSignerServerConfig(httpAddress, nodeAddress, nodePrivateKey)
