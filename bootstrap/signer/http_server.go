@@ -61,3 +61,12 @@ func (s *httpServer) Port() int {
 func (s *httpServer) Router() *http.ServeMux {
 	return s.router
 }
+
+func (c *httpServer) WaitUntilShutdown(shutdownContext context.Context) {
+	select {
+	case <-shutdownContext.Done():
+		if shutdownContext.Err() == context.DeadlineExceeded {
+			panic("failed to shutdown")
+		}
+	}
+}
