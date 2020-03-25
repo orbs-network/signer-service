@@ -10,6 +10,8 @@ RUN go get
 
 ADD . .
 
+RUN ./test.sh
+
 RUN ./build-binaries.sh
 
 FROM busybox
