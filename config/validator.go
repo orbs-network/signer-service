@@ -3,8 +3,8 @@ package config
 import (
 	"bytes"
 	"encoding/hex"
-	"github.com/orbs-network/crypto-lib-go/crypto/digest"
-	"github.com/orbs-network/crypto-lib-go/crypto/signature"
+	"github.com/orbs-network/crypto-lib-go/crypto/ethereum/digest"
+	"github.com/orbs-network/crypto-lib-go/crypto/ethereum/signature"
 	"github.com/pkg/errors"
 )
 
