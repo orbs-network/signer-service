@@ -8,6 +8,7 @@ jobs:
       - checkout
       - run: ./create-version-file.sh
       - run: ./docker-build.sh
+      - run: ./.circleci/release-to-staging.sh
 
 workflows:
   version: 2
