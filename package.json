@@ -1,0 +1,28 @@
+{
+  "name": "orbs-signer-web3-provider",
+  "version": "1.0.0",
+  "description": "[![CI](https://circleci.com/gh/orbs-network/signer-service/tree/master.svg?style=svg)](https://circleci.com/gh/orbs-network/signer-service/tree/master)",
+  "main": "javascript/web3/provider.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest ./javascript/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orbs-network/signer-service.git"
+  },
+  "author": "Kirill Maksimov <kirill@orbs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/orbs-network/signer-service/issues"
+  },
+  "homepage": "https://github.com/orbs-network/signer-service#readme",
+  "dependencies": {
+    "orbs-client-sdk": "^2.5.0"
+  },
+  "devDependencies": {
+    "jest": "^26.0.1"
+  }
+}

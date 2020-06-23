@@ -39,3 +39,14 @@ func TestService_NodeSign(t *testing.T) {
 
 	require.EqualValues(t, signed, clientSignature.Signature())
 }
+
+// Contract values for JS
+func Test_Payload(t *testing.T) {
+	payload := []byte{1, 2, 3}
+
+	raw := (&services.NodeSignInputBuilder{
+		Data: payload,
+	}).Build().Raw()
+
+	require.EqualValues(t,[]byte{3, 0, 0, 0, 1, 2, 3}, raw)
+}
