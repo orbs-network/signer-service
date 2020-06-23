@@ -2,7 +2,7 @@
   "name": "orbs-signer-web3-provider",
   "version": "1.0.0",
   "description": "[![CI](https://circleci.com/gh/orbs-network/signer-service/tree/master.svg?style=svg)](https://circleci.com/gh/orbs-network/signer-service/tree/master)",
-  "main": "javascript/web3/provider.js",
+  "main": "javascript/web3/signer.js",
   "directories": {
     "test": "test"
   },
@@ -20,9 +20,11 @@
   },
   "homepage": "https://github.com/orbs-network/signer-service#readme",
   "dependencies": {
+    "node-fetch": "^2.6.0",
     "orbs-client-sdk": "^2.5.0"
   },
   "devDependencies": {
-    "jest": "^26.0.1"
+    "jest": "^26.0.1",
+    "web3": "^2.0.0-alpha.1"
   }
 }
