@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "jest --testTimeout 60000 ./javascript/"
+    "test": "jest --testTimeout 5000 ./javascript/"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,6 @@
   "devDependencies": {
     "@orbs-network/orbs-ethereum-contracts-v2": "0.0.12",
     "jest": "^26.0.1",
-    "web3": "^2.0.0-alpha.1"
+    "web3": "^1.2.6"
   }
 }

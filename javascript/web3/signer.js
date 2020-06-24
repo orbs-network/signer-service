@@ -1,12 +1,28 @@
-const EthereumTx = require("ethereumjs-tx");
-const { TransactionSigner } = require("web3-eth");
+const { Transaction } = require("ethereumjs-tx");
+const fetch = require("node-fetch");
+const { encode } = require("rlp");
+const { keccak256, isHexStrict, hexToNumber } = require("web3-utils");
 const NodeSignInputBuilder = require("./node-sign-input-builder");
 const NodeSignOutputReader = require("./node-sign-output-reader");
-const fetch = require("node-fetch");
-const { ecrecover } = require("ethereumjs-util");
-const { hexToBytes, getSignatureParameters } = require("web3-utils");
-const { encode } = require("rlp");
-const { keccak256 } = require("web3-utils");
+
+function getSignatureParameters(signature) {
+    if (!isHexStrict(signature)) {
+        throw new Error(`Given value "${signature}" is not a valid hex string.`);
+    }
+
+    const r = signature.slice(0, 66);
+    const s = `0x${signature.slice(66, 130)}`;
+    let v = `0x${signature.slice(130, 132)}`;
+    v = hexToNumber(v);
+
+    if (![27, 28].includes(v)) v += 27;
+
+    return {
+        r,
+        s,
+        v
+    };
+}
 
 class Signer {
     constructor(host) {
@@ -33,7 +49,7 @@ class Signer {
     async sign(transaction, privateKey) {
         // we are going to ignore privateKey completely
 
-        const ethTx = new EthereumTx(transaction);
+        const ethTx = new Transaction(transaction);
         const signature = await this._sign(encode(ethTx.raw.slice(0, 6)));
 
         const { r, s, v } = getSignatureParameters("0x" + signature.toString("hex"));
