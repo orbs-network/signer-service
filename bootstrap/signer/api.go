@@ -9,9 +9,9 @@ package signer
 import (
 	"context"
 	"encoding/json"
-	"github.com/orbs-network/signer-service/config"
 	"github.com/orbs-network/orbs-spec/types/go/services"
 	"github.com/orbs-network/scribe/log"
+	"github.com/orbs-network/signer-service/config"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -33,6 +33,28 @@ func (a *api) SignHandler(writer http.ResponseWriter, request *http.Request) {
 	ctx := request.Context()
 
 	if signature, err := a.vault.NodeSign(ctx, services.NodeSignInputReader(input)); err == nil {
+		a.logger.Info("successfully signed payload")
+		if _, err := writer.Write(signature.Raw()); err != nil {
+			a.logger.Error("could not write response body into the socket", log.Error(err))
+		}
+
+		return
+	}
+
+	writer.WriteHeader(http.StatusInternalServerError)
+}
+
+func (a *api) EthSignHandler(writer http.ResponseWriter, request *http.Request) {
+	input, err := ioutil.ReadAll(request.Body)
+	if err != nil {
+		writer.WriteHeader(http.StatusBadRequest)
+		a.logger.Error("failed to read request body")
+		return
+	}
+
+	ctx := request.Context()
+
+	if signature, err := a.vault.EthSign(ctx, services.NodeSignInputReader(input)); err == nil {
 		a.logger.Info("successfully signed payload")
 		if _, err := writer.Write(signature.Raw()); err != nil {
 			a.logger.Error("could not write response body into the socket", log.Error(err))
