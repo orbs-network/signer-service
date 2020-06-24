@@ -17,7 +17,7 @@ beforeAll(async () => {
         console.log(`stdout: ${data}`);
     });
 
-    // await ganacheDriver.startGanache();
+    await ganacheDriver.startGanache();
 
     await new Promise((resolve, reject) => {
         setTimeout(resolve, 3000);
@@ -25,7 +25,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-    // await ganacheDriver.stopGanache();
+    await ganacheDriver.stopGanache();
 
     const ok = signerProcess.kill();
     console.log(`terminating child process: ${ok}`);
