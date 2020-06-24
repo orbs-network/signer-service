@@ -56,7 +56,7 @@ it("should be able to sign messages", async () => {
     });
 });
 
-xit("should work with ganache", async () => {
+it("should work with ganache", async () => {
     const d = await Driver.new();
     await d.erc20.assign(address, BN(500));
 
