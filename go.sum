@@ -113,6 +113,7 @@ github.com/orbs-network/go-mock v0.0.0-20180813130752-890a1ee8d0a1 h1:ezKxeCPNvc
 github.com/orbs-network/go-mock v0.0.0-20180813130752-890a1ee8d0a1/go.mod h1:Hfj5NDPp07PIkGv5y8g1C0zsMXbrVTPQVIvSuHSHyvo=
 github.com/orbs-network/gojay v1.3.0 h1:TDqmmbgwHum9oXq1iexd+J+IUBm4/gtlyoOP5HV8rvw=
 github.com/orbs-network/gojay v1.3.0/go.mod h1:xdSp1mz0+DL+c6OLsbZ5qB/Gtygikcr5NdSsU1GsRC0=
+github.com/orbs-network/govnr v0.2.0 h1:Txazgo4Jd29hiARXg6nMqK2pmJA85KeXR+ZjLNy9WZc=
 github.com/orbs-network/govnr v0.2.0/go.mod h1:kZctUOFclDbO3Z6w559++l4qh0FPb57XdE5IdOFCbI4=
 github.com/orbs-network/healthcheck v0.0.0-20200319121938-0c2880ec01cb h1:OXCPhy8fUBoKbkmm0V4cmB0dDFt2dJ5zMdNel7aBvJU=
 github.com/orbs-network/healthcheck v0.0.0-20200319121938-0c2880ec01cb/go.mod h1:tKp6O9i5wAxXJmvcztnZdW4tyMAR1wUlsyn1BAxu6lc=
@@ -125,6 +126,8 @@ github.com/orbs-network/membuffers v0.4.0 h1:tqeCLjdXJX3JIGy2mEMroeE+vG5mWTZx1vp
 github.com/orbs-network/membuffers v0.4.0/go.mod h1:mhOIfhkMQWKhbQbwD2BoIlV9eAA3LwZXMC0+JIrDmCM=
 github.com/orbs-network/orbs-spec v0.0.0-20200312223140-a78d945bab99 h1:SIM5FvYeayQfRWBTwuPfe/JHI1NrKY7QaTzjfemjAkA=
 github.com/orbs-network/orbs-spec v0.0.0-20200312223140-a78d945bab99/go.mod h1:D4+jHMhQ+mPB4uhqZ2wtzuG8RV2JgltWG1FqAwLIaOw=
+github.com/orbs-network/orbs-spec v0.0.0-20200624091201-eb5ca526fb87 h1:GRVZSE13oMWZjqs5W/bXvHTcJNgNUQQhYcQO8DuU5wo=
+github.com/orbs-network/orbs-spec v0.0.0-20200624091201-eb5ca526fb87/go.mod h1:D4+jHMhQ+mPB4uhqZ2wtzuG8RV2JgltWG1FqAwLIaOw=
 github.com/orbs-network/pbparser v0.2.0/go.mod h1:WSzcxgH5xzywQm0YSASbD7RcdxBXZgqZaDVK8M+8DJ8=
 github.com/orbs-network/pbparser v0.3.0/go.mod h1:WSzcxgH5xzywQm0YSASbD7RcdxBXZgqZaDVK8M+8DJ8=
 github.com/orbs-network/scribe v0.1.0/go.mod h1:FmGcbukz5eolO+mqzxwmuy4RF4UEoLfGJIeEDAoGsBU=

@@ -74,30 +74,24 @@ func TestService_EthSign(t *testing.T) {
 	cfg := &signerServiceConfig{}
 	pk := cfg.NodePrivateKey()
 
-	//testOutput := log.NewTestOutput(t, log.NewHumanReadableFormatter())
-	//testLogger := log.GetLogger().WithOutput(testOutput)
+	testOutput := log.NewTestOutput(t, log.NewHumanReadableFormatter())
+	testLogger := log.GetLogger().WithOutput(testOutput)
 
-	//service := NewService(cfg, testLogger)
-
-	//payload := []byte("payload")
+	service := NewService(cfg, testLogger)
 
 	payload, err := encoding.DecodeHex("f83f808b32303030303030303030308532313030309435353535353535353535353535353535353535359331303030303030303030303030303030303030820001")
 	require.NoError(t, err)
-	fmt.Println(payload)
 
 	h := hash.CalcKeccak256(payload)
-	fmt.Println(h, len(h))
 	signed, err := signature.SignEcdsaSecp256K1(pk, h)
 	require.NoError(t, err)
 
-	fmt.Println(signed.String())
-
 	require.EqualValues(t, "50b69b24790fbdf91bd0272fef54f7490fb4f61cb07a91a3d61e6c115a6fe80b76df08f4f3a5763bc721423c89c074fec9af0ed86bf889973a85499c4691cbf201", signed.String())
 
-	//clientSignature, err := service.NodeSign(context.TODO(), (&services.NodeSignInputBuilder{
-	//	Data: payload,
-	//}).Build())
-	//require.NoError(t, err)
-	//
-	//require.EqualValues(t, signed, clientSignature.Signature())
+	clientSignature, err := service.EthSign(context.TODO(), (&services.NodeSignInputBuilder{
+		Data: payload,
+	}).Build())
+	require.NoError(t, err)
+
+	require.EqualValues(t, signed, clientSignature.Signature())
 }
