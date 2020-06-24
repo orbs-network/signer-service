@@ -1,6 +1,8 @@
 // const Web3 = require("Web3");
 const Signer = require("./signer");
 const {spawn} = require("child_process");
+const { ganacheDriver, Driver } = require("@orbs-network/orbs-ethereum-contracts-v2");
+const BN = require('bn.js').BN;
 
 let signerProcess;
 
@@ -14,22 +16,28 @@ beforeAll(async () => {
         console.log(`stdout: ${data}`);
     });
 
+    await ganacheDriver.startGanache();
+
     await new Promise((resolve, reject) => {
         setTimeout(resolve, 3000);
     });
 });
 
 afterAll(async () => {
+    await ganacheDriver.stopGanache();
+
     const ok = signerProcess.kill();
     console.log(`terminating child process: ${ok}`);
 });
+
+const address = "0xa328846cd5b4979d68a8c58a9bdfeee657b34de7";
 
 it("should be able to sign messages", async () => {
     const transactionSigner = new Signer("http://localhost:7777");
     // const web3 = new Web3("http://localhost:8545");
 
     const tx = {
-        from: "0xa328846cd5b4979d68a8c58a9bdfeee657b34de7",
+        from: address,
         gasPrice: "20000000000",
         gas: "21000",
         to: "0x3535353535353535353535353535353535353535",
@@ -46,4 +54,24 @@ it("should be able to sign messages", async () => {
         rawTransaction: "0xf882808b323030303030303030303085323130303094353535353535353535353535353535353535353593313030303030303030303030303030303030308200011ca050b69b24790fbdf91bd0272fef54f7490fb4f61cb07a91a3d61e6c115a6fe80ba076df08f4f3a5763bc721423c89c074fec9af0ed86bf889973a85499c4691cbf2",
         transactionHash: "0xe317b4d51a7c9ed3aec765ad32c021af031630e1e60607d49da08ac6c9a17848"
     });
+});
+
+it("should work with ganache", async () => {
+    const d = await Driver.new();
+    await d.erc20.assign(address, BN(500));
+
+    const assignTx = {
+        from: address,
+        to: d.erc20.address,
+        gas: 0x7fffffff,
+        data: d.erc20.methods.assign(address, BN(200)).encodeABI(),
+    };
+
+    const { rawTransaction } = await transactionSigner.sign(assignTx);
+
+    await d.web3.eth.sendSignedTransaction(rawTransaction);
+
+    const balance = await d.erc20.balanceOf(address);
+
+    expect(balance).toBe(BN(700));
 });
