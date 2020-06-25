@@ -7,7 +7,10 @@ jobs:
     steps:
       - checkout
       - run: ./create-version-file.sh
-      - run: ./docker-build.sh
+      # - run: ./docker-build.sh
+      - run: npm install
+      - run: npm run compose
+      - run: npm test
       - run: ./.circleci/release-to-staging.sh
 
 workflows:
