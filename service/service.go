@@ -8,6 +8,8 @@ package service
 
 import (
 	"context"
+	"github.com/orbs-network/crypto-lib-go/crypto/ethereum/signature"
+	"github.com/orbs-network/crypto-lib-go/crypto/hash"
 	"github.com/orbs-network/crypto-lib-go/crypto/signer"
 	"github.com/orbs-network/orbs-spec/types/go/primitives"
 	"github.com/orbs-network/orbs-spec/types/go/services"
@@ -40,4 +42,23 @@ func (s *service) NodeSign(ctx context.Context, input *services.NodeSignInput) (
 	return (&services.NodeSignOutputBuilder{
 		Signature: signature,
 	}).Build(), nil
+}
+
+func (s *service) EthSign(ctx context.Context, input *services.NodeSignInput) (*services.NodeSignOutput, error) {
+	//signature, err := signer.NewLocalSigner(s.config.NodePrivateKey()).Sign(ctx, input.Data())
+	signature, err := ethSign(s.config.NodePrivateKey(), input.Data())
+
+	if err != nil {
+		s.logger.Error("Node sign error", log.Error(err))
+		return nil, err
+	}
+
+	return (&services.NodeSignOutputBuilder{
+		Signature: signature,
+	}).Build(), nil
+}
+
+func ethSign(privateKey []byte, payload []byte) ([]byte, error) {
+	h := hash.CalcKeccak256(payload)
+	return signature.SignEcdsaSecp256K1(privateKey, h)
 }

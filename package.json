@@ -1,0 +1,39 @@
+{
+  "name": "orbs-signer-web3-provider",
+  "version": "1.0.0",
+  "description": "[![CI](https://circleci.com/gh/orbs-network/signer-service/tree/master.svg?style=svg)](https://circleci.com/gh/orbs-network/signer-service/tree/master)",
+  "main": "javascript/web3/signer.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "compose": "VERSION=$(cat .version) docker-compose up -d",
+    "test": "jest --forceExit --testTimeout 60000 ./javascript/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orbs-network/signer-service.git"
+  },
+  "author": "Kirill Maksimov <kirill@orbs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/orbs-network/signer-service/issues"
+  },
+  "homepage": "https://github.com/orbs-network/signer-service#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.0",
+    "orbs-client-sdk": "^2.5.0"
+  },
+  "devDependencies": {
+    "@orbs-network/orbs-ethereum-contracts-v2": "0.0.12",
+    "jest": "^26.0.1",
+    "web3": "^1.2.6"
+  },
+  "jest": {
+    "verbose": true,
+    "extraGlobals": ["Math"],
+    "rootDir": ".",
+    "testEnvironment": "node",
+    "moduleFileExtensions": ["js", "json"]
+  }
+}

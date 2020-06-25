@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+    signer:
+        image: orbsnetwork/signer:${VERSION}
+        ports:
+            - 7777:7777
+        volumes:
+            - ./javascript/web3/keys.json:/run/secrets/keys.json
+        command: /opt/orbs/orbs-signer -listen :7777 -config /run/secrets/keys.json
+
+    ganache:
+        image: trufflesuite/ganache-cli
+        ports:
+            - 7545:7545
+        command: -p 7545 -i 5777 -a 100 --gasLimit 0x7FFFFFFF --gasPrice 1 -m  "vanish junk genuine web seminar cook absurd royal ability series taste method identify elevator liquid"
+    

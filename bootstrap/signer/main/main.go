@@ -34,6 +34,11 @@ func main() {
 		return
 	}
 
+	if len(configFiles) == 0 {
+		flag.Usage()
+		os.Exit(1)
+	}
+
 	logger := getLogger()
 	cfg, err := config.GetNodeConfigFromFiles(configFiles, *httpAddress)
 	if err != nil {
