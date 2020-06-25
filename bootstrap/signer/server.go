@@ -39,7 +39,7 @@ func StartSignerServer(cfg config.SignerServiceConfig, logger log.Logger) (*Serv
 
 	httpServer.Router().HandleFunc("/", api.IndexHandler)
 	httpServer.Router().HandleFunc("/sign", api.SignHandler)
-	httpServer.Router().HandleFunc("/ethSign", api.EthSignHandler)
+	httpServer.Router().HandleFunc("/eth-sign", api.EthSignHandler)
 
 	_, cancel := context.WithCancel(context.Background())
 	s := &Server{

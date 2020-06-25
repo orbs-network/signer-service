@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "compose": "VERSION=$(cat .version) docker-compose up -d",
     "test": "jest --testTimeout 60000 ./javascript/"
   },
   "repository": {

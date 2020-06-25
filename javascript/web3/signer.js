@@ -32,7 +32,7 @@ class Signer {
     async _sign(payload) {
         const body = new NodeSignInputBuilder(payload).build();
 
-        const res = await fetch(`${this.host}/ethSign`, {
+        const res = await fetch(`${this.host}/eth-sign`, {
             method: "post",
             body:  body,
             headers: { "Content-Type": "application/membuffers" },
