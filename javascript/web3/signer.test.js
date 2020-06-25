@@ -2,7 +2,7 @@ const Signer = require("./signer");
 const { Driver } = require("@orbs-network/orbs-ethereum-contracts-v2");
 const BN = require('bn.js').BN;
 
-const address = "0xa328846cd5b4979d68a8c58a9bdfeee657b34de7";
+const address = "0x29ce860a2247d97160d6dfc087a15f41e2349087";
 
 it("should be able to sign messages", async () => {
     const tx = {
@@ -34,7 +34,7 @@ it("should work with ganache", async () => {
         to: d.erc20.address,
         gasLimit: 0x7fffffff,
         data: d.erc20.web3Contract.methods.assign(address, new BN(200)).encodeABI(),
-        nonce: await d.web3.eth.getTransactionCount(address) + 1,
+        nonce: await d.web3.eth.getTransactionCount(address),
     };
 
     const transactionSigner = new Signer("http://localhost:7777");

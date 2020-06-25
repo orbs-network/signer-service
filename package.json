@@ -28,5 +28,12 @@
     "@orbs-network/orbs-ethereum-contracts-v2": "0.0.12",
     "jest": "^26.0.1",
     "web3": "^1.2.6"
+  },
+  "jest": {
+    "verbose": true,
+    "extraGlobals": ["Math"],
+    "rootDir": ".",
+    "testEnvironment": "node",
+    "moduleFileExtensions": ["js", "json"]
   }
 }
