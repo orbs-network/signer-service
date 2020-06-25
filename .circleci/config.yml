@@ -1,4 +1,8 @@
-version: 2
+version: 2.1
+
+orbs:
+  node: circleci/node@3.0.0
+
 jobs:
   tests:
     machine:
@@ -6,9 +10,11 @@ jobs:
       docker_layer_caching: true
     steps:
       - checkout
+      - node/install:
+          node-version: latest
       - run: ./create-version-file.sh
       - run: ./docker-build.sh
-      - run: npm install
+      - node/install-packages      
       - run: npm run compose
       - run: npm test
       - run: npm test # this is intentional
