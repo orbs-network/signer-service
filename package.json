@@ -1,5 +1,5 @@
 {
-  "name": "orbs-signer-web3-provider",
+  "name": "@orbs-network/orbs-signer-client",
   "version": "1.0.0",
   "description": "[![CI](https://circleci.com/gh/orbs-network/signer-service/tree/master.svg?style=svg)](https://circleci.com/gh/orbs-network/signer-service/tree/master)",
   "main": "javascript/web3/signer.js",
@@ -35,5 +35,6 @@
     "rootDir": ".",
     "testEnvironment": "node",
     "moduleFileExtensions": ["js", "json"]
-  }
+  },
+  "files": ["javascript/**/*"]
 }
