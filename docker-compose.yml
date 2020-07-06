@@ -7,7 +7,7 @@ services:
             - 7777:7777
         volumes:
             - ./javascript/web3/keys.json:/run/secrets/keys.json
-        command: /opt/orbs/orbs-signer -listen :7777 -config /run/secrets/keys.json
+        command: /opt/orbs/service -config /run/secrets/keys.json
 
     ganache:
         image: trufflesuite/ganache-cli
