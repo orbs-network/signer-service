@@ -26,6 +26,8 @@ ADD ./boyar/service /opt/orbs/service
 
 VOLUME /opt/orbs/status
 
+VOLUME /opt/orbs/logs
+
 HEALTHCHECK CMD /opt/orbs/healthcheck --url http://localhost:7777 --output /opt/orbs/status/status.json
 
 CMD /opt/orbs/service
