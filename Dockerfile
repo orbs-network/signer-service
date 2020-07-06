@@ -22,8 +22,10 @@ COPY --from=0 /go/src/github.com/orbs-network/signer/_bin/orbs-signer .
 
 COPY --from=0 /go/src/github.com/orbs-network/signer/_bin/healthcheck .
 
+ADD ./boyar/service /opt/orbs/service
+
 VOLUME /opt/orbs/status
 
 HEALTHCHECK CMD /opt/orbs/healthcheck --url http://localhost:7777 --output /opt/orbs/status/status.json
 
-CMD /opt/orbs/orbs-signer
+CMD /opt/orbs/service
