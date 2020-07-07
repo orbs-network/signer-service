@@ -17,7 +17,7 @@ import (
 )
 
 func getLogger() log.Logger {
-	return log.GetLogger().WithOutput(log.NewFormattingOutput(os.Stdout, log.NewHumanReadableFormatter()))
+	return log.GetLogger().WithOutput(log.NewFormattingOutput(os.Stdout, log.NewJsonFormatter()))
 }
 
 func main() {
