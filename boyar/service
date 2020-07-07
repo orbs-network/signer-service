@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/opt/orbs/orbs-signer -listen :7777 $@ 2>&1 > /opt/orbs/logs/current

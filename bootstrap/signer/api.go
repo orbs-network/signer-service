@@ -66,6 +66,13 @@ func (a *api) EthSignHandler(writer http.ResponseWriter, request *http.Request) 
 	writer.WriteHeader(http.StatusInternalServerError)
 }
 
+type StatusResponse struct {
+	Timestamp time.Time
+	Status    string
+	Error     string
+	Payload   interface{}
+}
+
 func (a *api) IndexHandler(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Add("Content-Type", "application/json")
 
@@ -74,21 +81,25 @@ func (a *api) IndexHandler(writer http.ResponseWriter, request *http.Request) {
 	}).Build()
 
 	if _, err := a.vault.NodeSign(context.Background(), input); err == nil {
-		rawJSON, _ := json.Marshal(map[string]interface{}{
-			"status":      "OK",
-			"description": "ORBS blockchain signer service",
-			"version":     config.GetVersion(),
+		rawJSON, _ := json.Marshal(StatusResponse{
+			Status: "OK",
+			Timestamp: time.Now(),
+			Payload: map[string]interface{}{
+				"Version": config.GetVersion(),
+			},
 		})
 
 		writer.Write(rawJSON)
 		return
 	} else {
 		a.logger.Error("failed healthcheck", log.Error(err))
-		rawJSON, _ := json.Marshal(map[string]interface{}{
-			"status":      "Configuration Error",
-			"description": "ORBS blockchain signer service",
-			"version":     config.GetVersion(),
-			"error":       err.Error(),
+		rawJSON, _ := json.Marshal(StatusResponse{
+			Status: "Configuration Error",
+			Timestamp: time.Now(),
+			Error: err.Error(),
+			Payload: map[string]interface{}{
+				"Version": config.GetVersion(),
+			},
 		})
 		writer.Write(rawJSON)
 	}
