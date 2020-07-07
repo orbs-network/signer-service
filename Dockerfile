@@ -23,7 +23,6 @@ RUN apk add --no-cache daemontools --repository http://dl-cdn.alpinelinux.org/al
 COPY --from=0 /go/src/github.com/orbs-network/signer/_bin/orbs-signer .
 
 COPY --from=0 /go/src/github.com/orbs-network/signer/_bin/healthcheck .
-COPY ./entrypoint.sh /opt/orbs/service
 
 ADD ./boyar/service /opt/orbs/service
 
