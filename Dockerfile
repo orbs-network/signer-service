@@ -14,9 +14,11 @@ RUN ./test.sh
 
 RUN ./build-binaries.sh
 
-FROM busybox
+FROM alpine:3.12
 
 WORKDIR /opt/orbs
+
+RUN apk add --no-cache daemontools --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing
 
 COPY --from=0 /go/src/github.com/orbs-network/signer/_bin/orbs-signer .
 
@@ -25,7 +27,6 @@ COPY --from=0 /go/src/github.com/orbs-network/signer/_bin/healthcheck .
 ADD ./boyar/service /opt/orbs/service
 
 VOLUME /opt/orbs/status
-
 VOLUME /opt/orbs/logs
 
 HEALTHCHECK CMD /opt/orbs/healthcheck --url http://localhost:7777 --output /opt/orbs/status/status.json
