@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/google/go-cmp v0.4.0
-	github.com/orbs-network/crypto-lib-go v1.2.0
+	github.com/orbs-network/crypto-lib-go v1.5.0
 	github.com/orbs-network/govnr v0.2.0
 	github.com/orbs-network/healthcheck v1.1.0
 	github.com/orbs-network/orbs-spec v0.0.0-20200624091201-eb5ca526fb87
