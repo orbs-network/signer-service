@@ -11,4 +11,4 @@ done
 
 echo "Running signer-service.."
 
-/opt/orbs/orbs-signer $@ | $multilog_cmd 2>&1
+/opt/orbs/orbs-signer $@ 2>&1 | $multilog_cmd
