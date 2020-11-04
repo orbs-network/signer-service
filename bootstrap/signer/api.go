@@ -30,10 +30,14 @@ func (a *api) SignHandler(writer http.ResponseWriter, request *http.Request) {
 		return
 	}
 
-	ctx := request.Context()
+	if len(input) == 0 {
+		writer.WriteHeader(http.StatusBadRequest)
+		a.logger.Error("request body is empty")
+		return
+	}
 
+	ctx := request.Context()
 	if signature, err := a.vault.NodeSign(ctx, services.NodeSignInputReader(input)); err == nil {
-		a.logger.Info("successfully signed payload")
 		if _, err := writer.Write(signature.Raw()); err != nil {
 			a.logger.Error("could not write response body into the socket", log.Error(err))
 		}
@@ -52,10 +56,14 @@ func (a *api) EthSignHandler(writer http.ResponseWriter, request *http.Request) 
 		return
 	}
 
-	ctx := request.Context()
+	if len(input) == 0 {
+		writer.WriteHeader(http.StatusBadRequest)
+		a.logger.Error("request body is empty")
+		return
+	}
 
+	ctx := request.Context()
 	if signature, err := a.vault.EthSign(ctx, services.NodeSignInputReader(input)); err == nil {
-		a.logger.Info("successfully signed payload")
 		if _, err := writer.Write(signature.Raw()); err != nil {
 			a.logger.Error("could not write response body into the socket", log.Error(err))
 		}
@@ -80,18 +88,8 @@ func (a *api) IndexHandler(writer http.ResponseWriter, request *http.Request) {
 		Data: []byte(time.Now().String()),
 	}).Build()
 
-	if _, err := a.vault.NodeSign(context.Background(), input); err == nil {
-		rawJSON, _ := json.Marshal(StatusResponse{
-			Status: "OK",
-			Timestamp: time.Now(),
-			Payload: map[string]interface{}{
-				"Version": config.GetVersion(),
-			},
-		})
-
-		writer.Write(rawJSON)
-		return
-	} else {
+	if _, err := a.vault.NodeSign(context.Background(), input); err != nil {
+		writer.WriteHeader(http.StatusInternalServerError)
 		a.logger.Error("failed healthcheck", log.Error(err))
 		rawJSON, _ := json.Marshal(StatusResponse{
 			Status: "Configuration Error",
@@ -102,7 +100,16 @@ func (a *api) IndexHandler(writer http.ResponseWriter, request *http.Request) {
 			},
 		})
 		writer.Write(rawJSON)
+		return
 	}
 
-	writer.WriteHeader(http.StatusInternalServerError)
+	rawJSON, _ := json.Marshal(StatusResponse{
+		Status: "OK",
+		Timestamp: time.Now(),
+		Payload: map[string]interface{}{
+			"Version": config.GetVersion(),
+		},
+	})
+
+	writer.Write(rawJSON)
 }
