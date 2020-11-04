@@ -1,4 +1,4 @@
-FROM golang:1.12.9
+FROM golang:1.15
 
 WORKDIR /go/src/github.com/orbs-network/signer
 
@@ -6,7 +6,7 @@ ENV GO111MODULE=on
 
 ADD go.* /go/src/github.com/orbs-network/signer/
 
-RUN go get
+RUN go mod download
 
 ADD . .
 
