@@ -24,4 +24,9 @@ workflows:
   version: 2
   build:
     jobs:
-      - tests
+      - tests:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /v.*/
