@@ -16,7 +16,7 @@ it("should be able to sign messages for EIP155", async () => {
     };
 
     const transactionSigner = new Signer("http://localhost:7777");
-    let signedTransaction = await transactionSigner.signEip155(tx, 1, address);
+    let signedTransaction = await transactionSigner.sign(tx, 1, address);
     expect(signedTransaction).toEqual({
         messageHash: "2fdf20b217df1f790514c2b0f5668a4628cd97a8ddb10a2983108e633dbc439c",
         v: "0x26",
@@ -26,7 +26,7 @@ it("should be able to sign messages for EIP155", async () => {
         transactionHash: "0xea008472307cc3ff45377e423c46cc0c2b9d3bd25134e78faa4fd891463310e1"
     });
 
-	signedTransaction = await transactionSigner.signEip155(tx, 137, address);
+	signedTransaction = await transactionSigner.sign(tx, 137, address);
     expect(signedTransaction).toEqual({
         messageHash: "52cc881fb05b70d9e56a03a306befa688a03732085b052c563bd450a85d1a42b",
         v: "0x135",
@@ -52,7 +52,7 @@ it("failed address validation when signing with wrong address", async () => {
 
     const transactionSigner = new Signer("http://localhost:7777");
 
-    await expect(async () => {await transactionSigner.signEip155(tx, 1, otherAddr)})
+    await expect(async () => {await transactionSigner.sign(tx, 1, otherAddr)})
     .rejects.toThrowError(`Sender address mismatch after signing: expected ${otherAddr}, got ${address}`)
 
 });
@@ -70,7 +70,7 @@ it("should work with ganache for EIP155", async () => {
     };
 
     const transactionSigner = new Signer("http://localhost:7777");
-    const { rawTransaction, transactionHash } = await transactionSigner.signEip155(assignTx, 137, address);
+    const { rawTransaction, transactionHash } = await transactionSigner.sign(assignTx, 137, address);
 
     await d.web3.eth.sendSignedTransaction(rawTransaction);
 

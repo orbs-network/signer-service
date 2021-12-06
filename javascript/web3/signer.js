@@ -90,7 +90,17 @@ class Signer {
         };
     }
 
-    async sign(transaction, privateKey) {
+	async sign(transaction, chainId, expectedSenderAddress) {
+
+		if (chainId) {
+			return this.signEip155(transaction, chainId, expectedSenderAddress)
+		}
+		else {
+			return this.signLegacy(transaction)
+		}
+	}
+
+    async signLegacy(transaction, privateKey) {
         // we are going to ignore privateKey completely
 
         const ethTx = new Transaction(transaction);
