@@ -81,10 +81,10 @@ class Signer {
         const transactionHash = keccak256(rawTransaction);
 
         return {
-            messageHash: Buffer.from(signedTx.hash(false)).toString('hex'),
-            v: '0x' + Buffer.from(signedTx.v).toString('hex'),
-            r: '0x' + Buffer.from(signedTx.r).toString('hex'),
-            s: '0x' + Buffer.from(signedTx.s).toString('hex'),
+            messageHash: Buffer.from(signedTx.getMessageToSign(true)).toString('hex'),
+            v: '0x' + signedTx.v.toString(16),
+            r: '0x' + signedTx.r.toString(16),
+            s: '0x' + signedTx.s.toString(16),
             rawTransaction,
             transactionHash
         };
@@ -111,7 +111,7 @@ class Signer {
         const transactionHash = keccak256(rawTransaction);
 
         return {
-            messageHash: Buffer.from(signedTx.hash(false)).toString('hex'),
+            messageHash: Buffer.from(signedTx.getMessageToSign(true)).toString('hex'),
             v: '0x' + signedTx.v.toString(16),
             r: '0x' + signedTx.r.toString(16),
             s: '0x' + signedTx.s.toString(16),
