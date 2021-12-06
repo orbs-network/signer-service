@@ -38,7 +38,6 @@ it("should be able to sign messages for EIP155", async () => {
 });
 
 it("failed address validation when signing with wrong address", async () => {
-
 	const otherAddr = "0x9f0988Cd37f14dfe95d44cf21f9987526d6147Ba";
 
     const tx = {
