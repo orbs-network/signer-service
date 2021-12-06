@@ -16,14 +16,12 @@ jobs:
       - run: ./docker-build.sh
       - node/install-packages
       - run: npm run compose
-      - run:
-        command: npm test
-        environment:
-          NODE_OPTIONS: --openssl-legacy-provider
-      - run:
-        command: npm test # repetition this is intentional
-        environment:
-          NODE_OPTIONS: --openssl-legacy-provider
+      - run: |
+          export NODE_OPTIONS=--openssl-legacy-provider
+          npm test # repetition this is intentional
+      - run: |
+          export NODE_OPTIONS=--openssl-legacy-provider
+          npm test # repetition this is intentional
       - run: ./.circleci/release-to-staging.sh
 
 workflows:
