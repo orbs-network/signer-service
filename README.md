@@ -15,7 +15,7 @@ DockerHub: [https://hub.docker.com/repository/docker/orbsnetwork/signer](https:/
 ## Testing - javascript client
 
 ```
-docker-compose up
+docker-compose up -d
 npm install
 npm test
 docker compose down
