@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/orbs-network/signer-service#readme",
   "dependencies": {
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^3.1.1",
     "orbs-client-sdk": "^2.5.0"
   },
   "devDependencies": {
