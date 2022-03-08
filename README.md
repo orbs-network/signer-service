@@ -12,6 +12,16 @@ DockerHub: [https://hub.docker.com/repository/docker/orbsnetwork/signer](https:/
 
 `./test.sh`
 
+## Testing - javascript client
+
+```
+docker-compose up -d
+npm install
+npm test
+docker compose down
+```
+
+
 ## Building
 
 `./create-docker-version.sh && ./docker-build.sh` will produce new docker image.

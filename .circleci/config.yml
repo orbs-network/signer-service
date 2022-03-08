@@ -14,10 +14,14 @@ jobs:
           node-version: latest
       - run: ./create-version-file.sh
       - run: ./docker-build.sh
-      - node/install-packages      
+      - node/install-packages
       - run: npm run compose
-      - run: npm test
-      - run: npm test # this is intentional
+      - run: |
+          export NODE_OPTIONS=--openssl-legacy-provider
+          npm test # repetition this is intentional
+      - run: |
+          export NODE_OPTIONS=--openssl-legacy-provider
+          npm test # repetition this is intentional
       - run: ./.circleci/release-to-staging.sh
 
 workflows:
