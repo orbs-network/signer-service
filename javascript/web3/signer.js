@@ -6,6 +6,7 @@ const { keccak256, isHexStrict, hexToNumber } = require("web3-utils");
 const NodeSignInputBuilder = require("./node-sign-input-builder");
 const NodeSignOutputReader = require("./node-sign-output-reader");
 
+
 function getSignatureParameters(signature, chainId) {
     if (!isHexStrict(signature)) {
         throw new Error(`Given value "${signature}" is not a valid hex string.`);
