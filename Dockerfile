@@ -16,9 +16,9 @@ RUN ./build-binaries.sh
 
 FROM alpine:3.12
 
-WORKDIR /opt/orbs
-
 RUN apk add --no-cache daemontools --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing
+
+WORKDIR /opt/orbs
 
 COPY --from=0 /go/src/github.com/orbs-network/signer/_bin/orbs-signer .
 
