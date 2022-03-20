@@ -37,3 +37,7 @@ Usage:
   -version
     	returns information about version
 ```
+
+## Polygon-matic POS & EIP 155
+
+changes were added on [this commit](git@github.com:orbs-network/signer-service.git) to support [EIP-155](https://eips.ethereum.org/EIPS/eip-155#list-of-chain-ids) as a part of wider effort for the signer to support POS on matic network, and signing on other EVM networks using a channelID.
