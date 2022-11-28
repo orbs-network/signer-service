@@ -7,7 +7,7 @@ orbs:
 jobs:
   tests:
     machine:
-      image: ubuntu:16.04
+      image: ubuntu-2004:202010-01
       docker_layer_caching: true
     steps:
       - checkout
@@ -17,10 +17,8 @@ jobs:
       - node/install-packages
       - run: npm run compose
       - run: |
-          export NODE_OPTIONS=--openssl-legacy-provider
           npm test # repetition this is intentional
       - run: |
-          export NODE_OPTIONS=--openssl-legacy-provider
           npm test # repetition this is intentional
       - run: ./.circleci/release-to-staging.sh
 
