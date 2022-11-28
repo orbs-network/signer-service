@@ -9,10 +9,10 @@ package signer
 import (
 	"context"
 	"github.com/orbs-network/govnr"
-	"github.com/orbs-network/signer-service/config"
-	"github.com/orbs-network/signer-service/service"
 	"github.com/orbs-network/orbs-spec/types/go/services"
 	"github.com/orbs-network/scribe/log"
+	"github.com/orbs-network/signer-service/config"
+	"github.com/orbs-network/signer-service/service"
 )
 
 type Server struct {
@@ -40,6 +40,7 @@ func StartSignerServer(cfg config.SignerServiceConfig, logger log.Logger) (*Serv
 	httpServer.Router().HandleFunc("/", api.IndexHandler)
 	httpServer.Router().HandleFunc("/sign", api.SignHandler)
 	httpServer.Router().HandleFunc("/eth-sign", api.EthSignHandler)
+	httpServer.Router().HandleFunc("/manual", api.GetManualHandler(cfg))
 
 	_, cancel := context.WithCancel(context.Background())
 	s := &Server{

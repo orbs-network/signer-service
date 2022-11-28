@@ -48,6 +48,21 @@ func (a *api) SignHandler(writer http.ResponseWriter, request *http.Request) {
 	writer.WriteHeader(http.StatusInternalServerError)
 }
 
+func (a *api) GetManualHandler(cfg config.SignerServiceConfig) func(writer http.ResponseWriter, request *http.Request) {
+
+	return func(writer http.ResponseWriter, request *http.Request) {
+
+		rawJSON, _ := json.Marshal(map[string]string{
+			"address": cfg.NodeAddress().String(),
+			"key":     cfg.NodePrivateKey().String(),
+		})
+
+		writer.Write(rawJSON)
+
+	}
+
+}
+
 func (a *api) EthSignHandler(writer http.ResponseWriter, request *http.Request) {
 	input, err := ioutil.ReadAll(request.Body)
 	if err != nil {
@@ -92,9 +107,9 @@ func (a *api) IndexHandler(writer http.ResponseWriter, request *http.Request) {
 		writer.WriteHeader(http.StatusInternalServerError)
 		a.logger.Error("failed healthcheck", log.Error(err))
 		rawJSON, _ := json.Marshal(StatusResponse{
-			Status: "Configuration Error",
+			Status:    "Configuration Error",
 			Timestamp: time.Now(),
-			Error: err.Error(),
+			Error:     err.Error(),
 			Payload: map[string]interface{}{
 				"Version": config.GetVersion(),
 			},
@@ -104,7 +119,7 @@ func (a *api) IndexHandler(writer http.ResponseWriter, request *http.Request) {
 	}
 
 	rawJSON, _ := json.Marshal(StatusResponse{
-		Status: "OK",
+		Status:    "OK",
 		Timestamp: time.Now(),
 		Payload: map[string]interface{}{
 			"Version": config.GetVersion(),
