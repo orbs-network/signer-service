@@ -7,7 +7,7 @@ orbs:
 jobs:
   tests:
     machine:
-      image: ubuntu-2004:202010-01
+      image: ubuntu:16.04
       docker_layer_caching: true
     steps:
       - checkout
