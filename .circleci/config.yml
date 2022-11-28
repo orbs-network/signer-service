@@ -1,13 +1,11 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@4.9.0
   docker: circleci/docker@0.5.19
   
 jobs:
   tests:
-    docker:
-      - image: circleci/golang:1.15
+    machine: true
     steps:
       - checkout
       - node/install:
