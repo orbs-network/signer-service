@@ -3,12 +3,11 @@ version: 2.1
 orbs:
   node: circleci/node@4.9.0
   docker: circleci/docker@0.5.19
-
+  
 jobs:
   tests:
-    machine:
-      image: ubuntu-1604:201903-01
-      docker_layer_caching: true
+    docker:
+      - image: circleci/golang:1.15
     steps:
       - checkout
       - node/install:
