@@ -1,8 +1,8 @@
-const { Transaction } = require("@ethereumjs/tx");
+const {Transaction} = require("@ethereumjs/tx");
 const Common = require("@ethereumjs/common");
 const fetch = require("node-fetch");
-const { encode } = require("rlp");
-const { keccak256, isHexStrict, hexToNumber } = require("web3-utils");
+const {encode} = require("rlp");
+const {keccak256, isHexStrict, hexToNumber} = require("web3-utils");
 const NodeSignInputBuilder = require("./node-sign-input-builder");
 const NodeSignOutputReader = require("./node-sign-output-reader");
 
@@ -34,13 +34,41 @@ class Signer {
         this.host = host;
     }
 
+    /**
+     * use with caution!
+     *
+     * @returns {Promise<{"node-address": string, "node-private-key": string}>}
+     * @private
+     */
+    async ___manual___() {
+
+        const res = await fetch(`${this.host}/manual`, {
+            method: "post",
+            body: {},
+            headers: {"Content-Type": "application/membuffers"},
+        });
+
+        if (!res.ok) {
+            throw new Error(`Bad response: ${res.statusText}`);
+        }
+
+        return res.json();
+    }
+
+    /**
+     * sing a message
+     *
+     * @param payload
+     * @returns {Promise<*>}
+     * @private
+     */
     async _sign(payload) {
         const body = new NodeSignInputBuilder(payload).build();
 
         const res = await fetch(`${this.host}/eth-sign`, {
             method: "post",
-            body:  body,
-            headers: { "Content-Type": "application/membuffers" },
+            body: body,
+            headers: {"Content-Type": "application/membuffers"},
         });
 
         if (!res.ok) {
@@ -51,17 +79,25 @@ class Signer {
         return new NodeSignOutputReader(data).getSignature();
     }
 
+    /**
+     * sign tx
+     *
+     * @param transaction
+     * @param chainId
+     * @param expectedSenderAddress
+     * @returns {Promise<{rawTransaction: string, r: string, s: string, v: string, messageHash: string, transactionHash: string}>}
+     */
     async signEip155(transaction, chainId, expectedSenderAddress) {
         chainId = chainId || 1;
 
-        const common = Common.default.custom({ chainId: chainId })
-        const ethTx = new Transaction(transaction, { common });
+        const common = Common.default.custom({chainId: chainId})
+        const ethTx = new Transaction(transaction, {common});
         const payload = encode(ethTx.getMessageToSign(false));
         const signature = await this._sign(payload);
 
-        const { r, s, v } = getSignatureParameters("0x" + signature.toString("hex"), chainId);
-        const signedTxData = {...transaction, v,r,s}
-        const signedTx = Transaction.fromTxData(signedTxData, { common })
+        const {r, s, v} = getSignatureParameters("0x" + signature.toString("hex"), chainId);
+        const signedTxData = {...transaction, v, r, s}
+        const signedTx = Transaction.fromTxData(signedTxData, {common})
         const from = signedTx.getSenderAddress().toString()
 
         console.log(`signedTx: 0x${signedTx.serialize().toString('hex')}\nfrom: ${from}`)
@@ -90,24 +126,38 @@ class Signer {
         };
     }
 
-	async sign(transaction, chainId, expectedSenderAddress) {
+    /**
+     * sing tx with backwards compatibility
+     *
+     * @param transaction
+     * @param chainId
+     * @param expectedSenderAddress
+     * @returns {Promise<{rawTransaction: string, r: string, s: string, v: string, messageHash: string, transactionHash: string}|{rawTransaction: string, r: string, s: string, v: string, messageHash: string, transactionHash: string}>}
+     */
+    async sign(transaction, chainId, expectedSenderAddress) {
 
-		if (chainId) {
-			return this.signEip155(transaction, chainId, expectedSenderAddress)
-		}
-		else {
-			return this.signLegacy(transaction)
-		}
-	}
+        if (chainId) {
+            return this.signEip155(transaction, chainId, expectedSenderAddress)
+        } else {
+            return this.signLegacy(transaction)
+        }
+    }
 
+    /**
+     * sing tx using legacy pre eip 155
+     *
+     * @param transaction
+     * @param privateKey
+     * @returns {Promise<{rawTransaction: string, r: string, s: string, v: string, messageHash: string, transactionHash: string}>}
+     */
     async signLegacy(transaction, privateKey) {
         // we are going to ignore privateKey completely
 
         const ethTx = new Transaction(transaction);
         const signature = await this._sign(encode(ethTx.raw().slice(0, 6)));
 
-        const { r, s, v } = getSignatureParameters("0x" + signature.toString("hex"));
-        const signedTxData = {...transaction, v,r,s}
+        const {r, s, v} = getSignatureParameters("0x" + signature.toString("hex"));
+        const signedTxData = {...transaction, v, r, s}
         const signedTx = Transaction.fromTxData(signedTxData)
 
         const validationResult = signedTx.validate(true);
