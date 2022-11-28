@@ -1,16 +1,20 @@
 version: 2.1
 
 orbs:
+  node: circleci/node@4.9.0
   docker: circleci/docker@0.5.19
-  
+
 jobs:
   tests:
-    machine: true
+    machine:
+      image: ubuntu-2004:202010-01
+      docker_layer_caching: true
     steps:
       - checkout
       - node/install:
           node-version: latest
       - run: ./create-version-file.sh
+      - docker/install-docker      
       - run: ./docker-build.sh
       - node/install-packages
       - run: npm run compose
