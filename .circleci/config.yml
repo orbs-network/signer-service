@@ -6,13 +6,14 @@ orbs:
 jobs:
   tests:
     machine:
-      image: ubuntu-1604:201903-01
+      image: ubuntu-2004:202010-01
       docker_layer_caching: true
     steps:
       - checkout
       - node/install:
           node-version: latest
       - run: ./create-version-file.sh
+      - docker/install-docker
       - run: ./docker-build.sh
       - node/install-packages
       - run: npm run compose
