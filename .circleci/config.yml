@@ -11,8 +11,6 @@ jobs:
       docker_layer_caching: true
     steps:
       - checkout
-      - node/install:
-          node-version: latest
       - run: ./create-version-file.sh
       - docker/install-docker      
       - run: ./docker-build.sh
