@@ -11,7 +11,7 @@ require (
 	github.com/orbs-network/scribe v0.2.3
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.5.1
-	golang.org/x/crypto v0.0.0-20200311171314-f7b00557c8c4
+	golang.org/x/crypto v0.1.0
 )
 
 replace crypto-lib-go => ../crypto-lib-go
