@@ -8,10 +8,13 @@ package config
 
 import (
 	"encoding/json"
-	"github.com/orbs-network/crypto-lib-go/crypto/encoding"
-	"github.com/pkg/errors"
 	"io/ioutil"
 	"os"
+
+	"github.com/orbs-network/scribe/log"
+
+	"github.com/orbs-network/crypto-lib-go/crypto/encoding"
+	"github.com/pkg/errors"
 )
 
 type ArrayFlags []string
@@ -25,10 +28,21 @@ func (i *ArrayFlags) Set(value string) error {
 	return nil
 }
 
-func GetNodeConfigFromFiles(configFiles ArrayFlags, httpAddress string) (SignerServiceConfig, error) {
+// Parse required node configuration from environment variables or config file.
+// Environment variables override config file.
+// If no configuration is found (meaning no environment variables set or config file passed), an error is returned
+func GetNodeConfig(configFiles ArrayFlags, httpAddress string, logger log.Logger) (SignerServiceConfig, error) {
 	cfg := make(map[string]string)
 
-	if len(configFiles) != 0 {
+	nodeAddressEnvVar := os.Getenv("NODE_ADDRESS")
+	privateKeyEnvVar := os.Getenv("NODE_PRIVATE_KEY")
+
+	if nodeAddressEnvVar != "" && privateKeyEnvVar != "" {
+		cfg["node-address"] = nodeAddressEnvVar
+		cfg["node-private-key"] = privateKeyEnvVar
+		logger.Info("Using environment variables for node configuration")
+
+	} else if len(configFiles) != 0 {
 		for _, configFile := range configFiles {
 			if _, err := os.Stat(configFile); os.IsNotExist(err) {
 				return nil, errors.Errorf("could not open config file: %s", err)
@@ -50,6 +64,9 @@ func GetNodeConfigFromFiles(configFiles ArrayFlags, httpAddress string) (SignerS
 				return nil, err
 			}
 		}
+		logger.Info("Using config.json for node configuration")
+	} else {
+		return nil, errors.New("No configuration file or environment variables found for node config")
 	}
 
 	nodeAddress, err := encoding.DecodeHex(cfg["node-address"])
