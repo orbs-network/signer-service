@@ -25,3 +25,14 @@ jobs:
 
       - name: Test
         run: go test ./... -v
+
+  release-to-staging:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: ./docker-build.sh
+      - name: release-to-docker-hub-staging
+        env:
+          DOCKER_HUB_IMAGE_PATH: orbsnetworkstaging/signer
+          DOCKER_HUB_LOGIN: ${{ secrets.DOCKER_HUB_STAGING_LOGIN }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_STAGING_PASSWORD }}
+        run: ./.github/release-to-staging.sh
