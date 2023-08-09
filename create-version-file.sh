@@ -2,4 +2,5 @@
 
 LATEST_SEMVER=$(git describe --tags --abbrev=0)
 SHORT_COMMIT=$(git rev-parse HEAD | cut -c1-8)
+echo "$LATEST_SEMVER-$SHORT_COMMIT"
 echo "$LATEST_SEMVER-$SHORT_COMMIT" > .version
