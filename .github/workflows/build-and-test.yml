@@ -15,7 +15,9 @@ jobs:
         id: go
 
       - name: Check out code into the Go module directory
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Get dependencies
         run: go mod download
@@ -25,3 +27,11 @@ jobs:
 
       - name: Test
         run: go test ./... -v
+
+      - run: ./docker-build.sh
+      - name: release-to-docker-hub-staging
+        env:
+          DOCKER_HUB_IMAGE_PATH: orbsnetworkstaging/signer
+          DOCKER_HUB_LOGIN: ${{ secrets.DOCKER_HUB_STAGING_LOGIN }}
+          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_STAGING_PASSWORD }}
+        run: ./.github/release-to-staging.sh

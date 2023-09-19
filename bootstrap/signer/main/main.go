@@ -10,10 +10,11 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"os"
+
+	"github.com/orbs-network/scribe/log"
 	"github.com/orbs-network/signer-service/bootstrap/signer"
 	"github.com/orbs-network/signer-service/config"
-	"github.com/orbs-network/scribe/log"
-	"os"
 )
 
 func getLogger() log.Logger {
@@ -21,7 +22,7 @@ func getLogger() log.Logger {
 }
 
 func main() {
-	httpAddress := flag.String("listen", ":7777", "ip address and port for http server")
+	httpAddressFlag := flag.String("listen", ":7777", "ip address and port for http server")
 	version := flag.Bool("version", false, "returns information about version")
 
 	var configFiles config.ArrayFlags
@@ -29,18 +30,15 @@ func main() {
 
 	flag.Parse()
 
+	httpAddress := config.GetHttpAddress(*httpAddressFlag)
+
 	if *version {
 		fmt.Println(config.GetVersion())
 		return
 	}
 
-	if len(configFiles) == 0 {
-		flag.Usage()
-		os.Exit(1)
-	}
-
 	logger := getLogger()
-	cfg, err := config.GetNodeConfigFromFiles(configFiles, *httpAddress)
+	cfg, err := config.GetNodeConfig(configFiles, httpAddress, logger)
 	if err != nil {
 		logger.Error("failed to parse configuration", log.Error(err))
 		os.Exit(1)
