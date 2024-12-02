@@ -14,7 +14,7 @@ RUN ./test.sh
 
 RUN ./build-binaries.sh
 
-FROM alpine:3.13
+FROM alpine:3.20.3
 
 RUN apk add --no-cache daemontools --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing
 
