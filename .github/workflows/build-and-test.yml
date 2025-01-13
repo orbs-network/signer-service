@@ -1,5 +1,7 @@
 name: Build and Test
 on:
+  workflow_dispatch:
+    branches: *
   pull_request:
     branches: [master]
 
