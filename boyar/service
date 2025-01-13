@@ -12,4 +12,12 @@ done
 echo "Running signer-service.. on 80 and 7777"
 
 socat TCP4-LISTEN:7777,reuseaddr,fork TCP4:127.0.0.1:80 > /dev/null 2>&1 &
-exec /opt/orbs/orbs-signer $@ 2>&1 | $multilog_cmd
+
+if [ -n "$MULTILOG_DISABLED" ]; then
+  echo "Multilog is disabled"
+  exec /opt/orbs/orbs-signer $@ 2>&1
+else
+  exec /opt/orbs/orbs-signer $@ 2>&1 | $multilog_cmd
+fi
+
+
