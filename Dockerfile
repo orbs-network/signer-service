@@ -17,6 +17,7 @@ RUN ./build-binaries.sh
 FROM alpine:3.13
 
 RUN apk add --no-cache daemontools --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing
+RUN apk add --no-cache socat
 
 WORKDIR /opt/orbs
 
